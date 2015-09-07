@@ -39,7 +39,9 @@ public class Measure : MonoBehaviour {
 
 	IEnumerator play()
 	{
+		var value_text = GameObject.Find("valueText").GetComponent<Text>();
 		message_text_.text = "measuring:";
+		value_text.text = "";
 
 		int times_to_try = 10;
 		var results = new List<float>();
@@ -54,6 +56,7 @@ public class Measure : MonoBehaviour {
 			float latency;
 			bool success = microphone_fetcher_.endAnalysis(start_time, out latency);
 			if (success) {
+				value_text.text = value_text.text + string.Format("{0} msec\n", latency * 1000.0f);
 				results.Add(latency);
 				++tried;
 				message_text_.text = message_text_.text + "o";
